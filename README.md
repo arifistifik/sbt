@@ -1,2 +1,15 @@
 # sbt
-🔘 Selfbot Template line py3 terbaru 2020 🔘 \n⏩ Fitur Mantap \n⏩ Tampilan Keren \n⏩ Wroks on VPS \n⏩ Rekomendasi untuk anda sebelum install script ini sebaiknya anda pelajari tentang Config,  liff app line.  Karena suatu saat nanti ketika botnya sekarat, kalian nggak kebingungan ditengah jalan 😄😀 bergabunglah disalahsatu komunitas bot.  OK 😂
+🔘 Selfbot Template line py3 terbaru 2020 🔘
+⏩ Fitur Mantap 
+⏩ Tampilan Keren 
+⏩ Wroks on VPS 
+⏩ Rekomendasi untuk anda sebelum install & run script ini,
+sebaiknya anda pelajari tentang Config,line Liff dan lainya.  
+Karena suatu saat nanti ketika botnya sekarat, 
+anda tidak kebingungan ditengah jalan 😄😀 
+bergabunglah disalahsatu komunitas bot.OK 😂
+#======================#
+## WROKS 100 %
+#DPK BOTS
+#ARIFISTIFIK 
+# THANKS TO ALL MASTAH
