@@ -21,8 +21,8 @@ import json, requests, LineService
 from thrift.transport import THttpClient
 
 botStart = time.time()
-#cl = LINE()
-cl = LINE("EMPBGnnPrbiN1Gs4Wxj7.jLz6Rk6SYLGEr/zV+NTVrW.k5ulXAsteLosGqS08DPHuUoKJHoC+Q7RoJ+cSb2rFBY=")
+cl = LINE()
+#cl = LINE("EMPBGnnPrbiN1Gs4Wxj7.jLz6Rk6SYLGEr/zV+NTVrW.k5ulXAsteLosGqS08DPHuUoKJHoC+Q7RoJ+cSb2rFBY=")
 #cl = LINE("Email","Password")
 #cl = LINE()
 cl.log("Auth Token : " + str(cl.authToken))
