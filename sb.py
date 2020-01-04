@@ -22,9 +22,9 @@ from thrift.transport import THttpClient
 
 botStart = time.time()
 cl = LINE()
-#cl = LINE("EMPBGnnPrbiN1Gs4Wxj7.jLz6Rk6SYLGEr/zV+NTVrW.k5ulXAsteLosGqS08DPHuUoKJHoC+Q7RoJ+cSb2rFBY=")
+#cl = LINE("YOUR TOKEN")
 #cl = LINE("Email","Password")
-#cl = LINE()
+
 cl.log("Auth Token : " + str(cl.authToken))
 channelToken = cl.getChannelResult()
 cl.log("Channel Token : " + str(channelToken))
@@ -409,7 +409,7 @@ def sendTextTemplateMaster(to, text):
               "action": {
                   "type": "uri",
                   "label": "DPK",
-                  "uri": "http://line.me/ti/p/~arif.mh99"
+                  "uri": "http://line.me/ti/p/~@cob0606n"
               }
           }, {
               "flex": 3,
@@ -421,7 +421,7 @@ def sendTextTemplateMaster(to, text):
               "action": {
                   "type": "uri",
                   "label": "CREATOR",
-                  "uri": "http://line.me/ti/p/~arif.mh99"
+                  "uri": "http://line.me/ti/p/~@cob0606n"
               }
           }]
       }]
@@ -444,7 +444,7 @@ def sendStickerTemplate(to, text):
                                   "size": "full", 
                                   "action": {
                                       "type": "uri",
-                                      "uri": "http://line.me/ti/p/~arif.mh99"
+                                      "uri": "http://line.me/ti/p/~@cob0606n"
            }                                                
  }
 ]
@@ -611,7 +611,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99",
+          "uri": "http://line.me/ti/p/~@cob0606n",
         },
         "align": "center"
       },
@@ -628,7 +628,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99"
+          "uri": "http://line.me/ti/p/~@cob0606n"
         },
         "align": "center"
       },
@@ -750,7 +750,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99",
+          "uri": "http://line.me/ti/p/~@cob0606n",
         },
         "align": "center"
       },
@@ -767,7 +767,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99"
+          "uri": "http://line.me/ti/p/~@cob0606n"
         },
         "align": "center"
       },
@@ -889,7 +889,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99",
+          "uri": "http://line.me/ti/p/~@cob0606n",
         },
         "align": "center"
       },
@@ -906,7 +906,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99"
+          "uri": "http://line.me/ti/p/~@cob0606n"
         },
         "align": "center"
       },
@@ -1028,7 +1028,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99",
+          "uri": "http://line.me/ti/p/~@cob0606n",
         },
         "align": "center"
       },
@@ -1045,7 +1045,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99"
+          "uri": "http://line.me/ti/p/~@cob0606n"
         },
         "align": "center"
       },
@@ -1167,7 +1167,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99",
+          "uri": "http://line.me/ti/p/~@cob0606n",
         },
         "align": "center"
       },
@@ -1184,7 +1184,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99"
+          "uri": "http://line.me/ti/p/~@cob0606n"
         },
         "align": "center"
       },
@@ -1306,7 +1306,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99",
+          "uri": "http://line.me/ti/p/~@cob0606n",
         },
         "align": "center"
       },
@@ -1323,7 +1323,7 @@ def clBot(op):
         "color": "#FFFF00",
         "action": {
           "type": "uri",
-          "uri": "http://line.me/ti/p/~arif.mh99"
+          "uri": "http://line.me/ti/p/~@cob0606n"
         },
         "align": "center"
       },
@@ -1396,7 +1396,7 @@ def clBot(op):
                                                         "size": "full", 
                                                         "action": {
                                                             "type": "uri",
-                                                            "uri": "http://line.me/ti/p/~arif.mh99"
+                                                            "uri": "http://line.me/ti/p/~@cob0606n"
                                  }                                                
                        }
                       ]
@@ -2095,7 +2095,7 @@ def clBot(op):
                                         "imageUrl": "https://os.line.naver.jp/os/p/{}".format(ids.mid),
                                         "action": {
                                           "type": "uri",
-                                          "uri": "http://line.me/ti/p/~arif.mh99"
+                                          "uri": "http://line.me/ti/p/~@cob0606n"
                                           }
                                         }
                                       )
@@ -2126,7 +2126,7 @@ def clBot(op):
                                                                 {
                                                                     "type": "uri",
                                                                     "label": "CREATOR",
-                                                                    "uri": "http://line.me/ti/p/~arif.mh99",
+                                                                    "uri": "http://line.me/ti/p/~@cob0606n",
                                                                 }
                                                             ]
                                                         }
@@ -2823,7 +2823,7 @@ def clBot(op):
               "action": {
                   "type": "uri",
                   "label": "CREATOR",
-                  "uri": "http://line.me/ti/p/~arif.mh99"
+                  "uri": "http://line.me/ti/p/~@cob0606n"
               }
           }]
       }]
@@ -2900,7 +2900,7 @@ def clBot(op):
               "action": {
                   "type": "uri",
                   "label": "CREATOR",
-                  "uri": "http://line.me/ti/p/~arif.mh99"
+                  "uri": "http://line.me/ti/p/~@cob0606n"
               }
           }]
       }]
