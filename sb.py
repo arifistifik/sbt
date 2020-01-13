@@ -6,6 +6,7 @@ from linepy import *
 from akad.ttypes import *
 from multiprocessing import Pool, Process
 from time import sleep
+from humanfriendly import format_timespan, format_size, format_number, format_length
 import pytz, datetime, pafy, time, timeit, random, sys, ast, re, os, json, subprocess, threading, string, codecs, requests, tweepy, ctypes, urllib, wikipedia
 from datetime import timedelta, date
 from datetime import datetime
@@ -21,7 +22,7 @@ import json, requests, LineService
 from thrift.transport import THttpClient
 
 botStart = time.time()
-cl = LINE()
+cl = LINE("ENaoOR7jsGlIhxfxBUUb.0PzLwS72Fl1EGGJMnIN3IW.7k4OIV4TbYJWJy52Z2RVtPMaOp+J47jcosfbrQ+QDUE=")
 #cl = LINE("YOUR TOKEN")
 #cl = LINE("Email","Password")
 
@@ -64,7 +65,9 @@ settings = {
     "autoLeave": False,
     "autoRead": False,
     "lang":"JP",
-    "detectMention": False,
+    "commentPost": "DPK BOT HADIR BUAT LIKE STATUS KAMU \n Add my owner ID http://line.me/ti/p/~@cob0606n",
+    "detectMention": True,
+    "autoResponMessage": "Ngapain tag gua woy",
     "responsticker": False,
     "changeGroupPicture":[],
     "notifikasi": False,
@@ -163,7 +166,7 @@ def sendMessage(to, Message, contentMetadata={}, contentType=0):
 def RmentionMembers(to, mid):
     try:
         arrData = ""
-        textx = "┣{}\n┣1.".format(str(len(mid)))
+        textx = "{} mention members\n1.".format(str(len(mid)))
         arr = []
         no = 1
         num = 2
@@ -176,7 +179,7 @@ def RmentionMembers(to, mid):
             textx += mention
             if no < len(mid):
                 no += 1
-                textx += "┣%i. " % (num)
+                textx += "%i. " % (num)
                 num=(num+1)
             else:
                 try:
@@ -185,7 +188,7 @@ def RmentionMembers(to, mid):
                     no = "\n[ Success ]"
         cl.sendMessage(to, textx, {'MENTION': str('{"MENTIONEES":' + json.dumps(arr) + '}')}, 0)
     except Exception as error:
-        cl.sendMessage(to, "Ada yang tidak beres...!!\n" + str(error))
+        logError(error)
 def sendMessageWithMention(to, mid):
     try:
         aa = '{"S":"0","E":"3","M":'+json.dumps(mid)+'}'
@@ -231,69 +234,91 @@ def backupData():
         logError(error)
         return False
 
-def helpmessage():
-    helpMessage = "━━━━┅═❉ই۝ई❉═┅━━━━\n          ❇    SELFBOT    ❇\n╭━━━━━━━━━━━━━━━━\n║╭❉ MENU HELP ❇\n║┝───────────────" + "\n" + \
-                  "║┝──[❇ STATUS ❇ ]" + "\n" + \
-                  "║│ Restart" + "\n" + \
-                  "║│ Runtime" + "\n" + \
-                  "║│ Speed" + "\n" + \
-                  "║│ Status" + "\n" + \
-                  "║│ About" + "\n" + \
-                  "║│ Dell「Removechat」" + "\n" + \
-                  "║┝───────────────" + "\n" + \
-                  "║┝──[ ❇ SETTING ❇ ]" + "\n" + \
-                  "║│ Allstatus「On/Off」" + "\n" + \
-                  "║│ Notif「On/Off」" + "\n" + \
-                  "║│ Sider「On/Off」" + "\n" + \
-                  "║│ AutoAdd「On/Off」" + "\n" + \
-                  "║│ AutoJoin「On/Off」" + "\n" + \
-                  "║│ AutoLeave「On/Off」" + "\n" + \
-                  "║│ AutoRead「On/Off」" + "\n" + \
-                  "║│ CheckSticker「On/Off」" + "\n" + \
-                  "║│ DetectMention「On/Off」" + "\n" + \
-                  "║┝───────────────" + "\n" + \
-                  "║┝──[ ❇  SELF  ❇]" + "\n" + \
-                  "║│ Me" + "\n" + \
-                  "║│ MyMid" + "\n" + \
-                  "║│ MyName" + "\n" + \
-                  "║│ MyBio" + "\n" + \
-                  "║│ MyPicture" + "\n" + \
-                  "║│ MyVideoProfile" + "\n" + \
-                  "║│ MyCover" + "\n" + \
-                  "║│ StealContact「@」" + "\n" + \
-                  "║│ StealMid「@」" + "\n" + \
-                  "║│ StealName「@」" + "\n" + \
-                  "║│ StealBio「@」" + "\n" + \
-                  "║│ StealPicture「@」" + "\n" + \
-                  "║│ StealVideoProfile「@」" + "\n" + \
-                  "║│ StealCover「@」" + "\n" + \
-                  "║│ CloneProfile「@」" + "\n" + \
-                  "║│ RestoreProfile" + "\n" + \
-                  "║┝───────────────" + "\n" + \
-                  "║┝──[ ❇ GROUP ❇ ]" + "\n" + \
-                  "║│ GroupCreator" + "\n" + \
-                  "║│ GroupId" + "\n" + \
-                  "║│ GroupName" + "\n" + \
-                  "║│ GroupPicture" + "\n" + \
-                  "║│ GroupTicket" + "\n" + \
-                  "║│ GroupTicket「On/Off」" + "\n" + \
-                  "║│ GroupList" + "\n" + \
-                  "║│ GroupMemberList" + "\n" + \
-                  "║│ GroupInfo" + "\n" + \
-                  "║│ Mimic「On/Off」" + "\n" + \
-                  "║│ MimicList" + "\n" + \
-                  "║│ MimicAdd「@」" + "\n" + \
-                  "║│ MimicDel「@」" + "\n" + \
-                  "║│ Tag" + "\n" + \
-                  "║│ Lurking「On/Off/Reset」" + "\n" + \
-                  "║│ Lurking" + "\n" + \
-                  "║┝───────────────" + "\n" + \
-                  "║┝──[ ❇ MEDIA ❇]" + "\n" + \
-                  "║│ Kalender" + "\n" + \
-                  "║│ CheckDate「Date」" + "\n" + \
-                  "║┝───────────────\n║╰❉      DPK BOT      ❇\n╰━━━━━━━━━━━━━━━━\n━━━━┅═❉ই۝ई❉═┅━━━━"
-    return helpMessage
-    
+def Camera(to, text):
+    pilih = ("#FF0000","#E000CD","#57FF00")
+    warna = random.choice(pilih)
+    data = {
+            "type": "flex",
+            "altText": "ARIFISTIFIK",
+            "contents": {
+             "type": "bubble",
+             "styles": {
+               "header": {
+                 "backgroundColor": "#0000FF",
+               },
+               "body": {
+                 "backgroundColor": "#000000",
+                 "separator": True,
+                 "separatorColor": "#ffffff"
+               },
+               "footer": {
+                 "backgroundColor": "#000080",
+                 "separator": True
+               }
+             },
+             "header": {
+               "type": "box",
+               "layout": "horizontal",
+               "contents": [
+                 {
+                   "type": "text",
+                   "text": "  SIDER MEMBERS",
+                   "weight": "bold",
+                   "color": warna,
+                   "size": "xxl"
+                 }
+               ]
+             },
+             "hero": {
+               "type": "image",
+               "url": "https://obs.line-scdn.net/{}".format(cl.getContact(op.param2).pictureStatus),
+               "size": "full",
+               "aspectRatio": "20:13",
+               "aspectMode": "cover",
+               "action": {
+                 "type": "uri",
+                 "uri": "https://line.me/ti/p/~arifistifik"
+                 }
+               },
+                   "type": "bubble",
+                   "body": {
+                       "type": "box",
+                       "layout": "horizontal",
+                       "contents": [
+                           {
+                               "type": "text",
+                               "text": "Nama: {}".format(cl.getContact(op.param2).displayName),
+                               "wrap": True,
+                               "color": warna,
+                               "align": "center"
+                           }
+                       ]
+                   },
+                   "footer": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "spacing": "sm",
+                    "contents": [{
+                        "type": "button",
+                        "style": "primary",
+                        "color": warna,
+                        "height": "sm",
+                        "action": {
+                            "type": "uri",
+                            "label": "ADD ID LINE",
+                            "uri": "https://line.me/ti/p/"+cl.getUserTicket().id
+                            }													
+                        },
+                    {
+                        "type": "spacer",
+                        "size": "sm",
+                    }],
+                    "flex": 0
+                }
+            }
+        }
+    cl.postTemplate(op.param1, data)
+
 def sendTemplates(to, data):
     data = data
     url = "https://api.line.me/message/v3/share"
@@ -307,11 +332,11 @@ def sendTemplates(to, data):
 def sendTextTemplate(to, text):
     data = {
             "type": "flex",
-            "altText": "SELFBOT PRO",
+            "altText": "SELFBOT",
             "contents": {
   "styles": {
     "body": {
-      "backgroundColor": "#7D00C1"
+      "backgroundColor": "#FF0042"
     }
   },
   "type": "bubble",
@@ -325,7 +350,7 @@ def sendTextTemplate(to, text):
                 "text": text,
                 "size": "md",
                 "margin": "none",
-                "color": "#F0F8FF",
+                "color": "#FFFFFF",
                 "wrap": True,
                 "weight": "regular",
                 "type": "text"
@@ -350,7 +375,7 @@ def sendTextTemplate(to, text):
 def sendTextTemplateMaster(to, text):
     data = {
             "type": "flex",
-            "altText": "SELFBOT PRO",
+            "altText": "SELFBOT",
             "contents": {
   "type": "bubble",
   "body": {
@@ -402,7 +427,7 @@ def sendTextTemplateMaster(to, text):
           "layout": "horizontal",
           "contents": [{
               "type": "button",
-              "flex": 2,
+              "flex": 3,
               "style": "primary",
               "color": "#ff0a3b",
               "height": "sm",
@@ -487,12 +512,7 @@ def clBot(op):
             if msg.contentType == 0:
                 if text is None:
                     return
-                if text.lower() == 'help1':
-                    helpMessage = helpmessage()
-                    sendTextTemplate(to, str(helpMessage))
-                    cl.sendContact(to, "ud296655acef67cbd5e8208e63629f78b")
-
-                elif text.lower() == 'help':
+                if text.lower() == 'help':
                        if msg.toType == 2:
                            data = {
   "contents": [
@@ -575,7 +595,7 @@ def clBot(op):
               {
                 "contents": [
                   {
-                    "text": "╭━━━━━━━━━━━━━━━━\n║╭❉ MENU HELP ❇\n║┝───────────────\n║┝──[❇ STATUS ❇ ]\n║│ HELP\n║│ RESTART\n║│RUNTIME\n║│ STATUS\n║│ ABOUT\n║│ DELL(RCHAT)\n║│ MIMICDEL (@)\n║│ MIMICLIST\n║│ LURKING ON|OFF|RESET\n║│ LURKING\n║╰❉      DPK BOT      ❇\n╰━━━━━━━━━━━━━━━━\n━━━━┅═❉ই۝ई❉═┅━━━━ ",
+                    "text": "║│ RESTART\n║│RUNTIME\n║│ STATUS\n║│ ABOUT\n║│ DELL(RCHAT)\n║│ MIMICDEL (@)\n║│ MIMICLIST\n║│ LURKING ON|OFF|RESET\n║│ LURKING",
                     "size": "xs",
                     "margin": "none",
                     "color": "#FFFF00",
@@ -714,7 +734,7 @@ def clBot(op):
               {
                 "contents": [
                   {
-                    "text": "╭━━━━━━━━━━━━━━━━\n║╭❉ MENU SETTINGS ❇\n║┝───────────────\n║┝──[❇ SETTING ❇ ]\n║│ ALLSTATUS「On/Off」\n║│ RESTART\n║│ NOTIF「On/Off」\n║│ SIDER「On/Off」\n║│ AUTOADD「On/Off」\n║│ AUTOJOIN「On/Off」\n║│ AUTOLEAVE「On/Off」\n║│ AUTOREAD「On/Off」\n║│ CHECKSTICKER「On/Off」\n║│ DETECTMENTION「On/Off」\n║╰❉      DPK BOT      ❇\n╰━━━━━━━━━━━━━━━━\n━━━━┅═❉ই۝ई❉═┅━━━━ ",
+                    "text": "║│ ALLSTATUS「On/Off」\n║│ RESTART\n║│ NOTIF「On/Off」\n║│ SIDER「On/Off」\n║│ AUTOADD「On/Off」\n║│ AUTOJOIN「On/Off」\n║│ AUTOLEAVE「On/Off」\n║│ AUTOREAD「On/Off」\n║│ CHECKSTICKER「On/Off」\n║│ DETECTMENTION「On/Off」",
                     "size": "xs",
                     "margin": "none",
                     "color": "#FFFF00",
@@ -853,7 +873,7 @@ def clBot(op):
               {
                 "contents": [
                   {
-                    "text": "╭━━━━━━━━━━━━━━━━\n║╭❉ MENU GROUPS ❇\n║┝───────────────\n║┝──[❇ GROUPS ❇ ]\n║│ GROUPCREATOR\n║│ GROUPID\n║│ GROUPNAME\n║│ GROUPPICTURE\n║│ GROUPTICKET「On/Off」\n║│ GROUPTICKET\n║│ GROUPLIST\n║│ GROUPMEMBERLIST\n║│ GROUPINFO\n║│ TAG\n║╰❉      DPK BOT      ❇\n╰━━━━━━━━━━━━━━━━\n━━━━┅═❉ই۝ई❉═┅━━━━ ",
+                    "text": "║│ GROUPCREATOR\n║│ GROUPID\n║│ GROUPNAME\n║│ GROUPPICTURE\n║│ GROUPTICKET「On/Off」\n║│ GROUPTICKET\n║│ GROUPLIST\n║│ GROUPMEMBERLIST\n║│ GROUPINFO\n║│ TAG",
                     "size": "xs",
                     "margin": "none",
                     "color": "#FFFF00",
@@ -992,7 +1012,7 @@ def clBot(op):
               {
                 "contents": [
                   {
-                    "text": "╭━━━━━━━━━━━━━━━━\n║╭❉ MENU SPECIAL ❇\n║┝───────────────\n║┝──[❇ MEDIAS ❇ ]\n║│ MP4 JUDUL\n║│ MTOH「TGL-BLN-THN」 \n║│ KALENDER\n║│ YOUTUBE JUDUL\n║│ ASMAULHUSNA NO 1-99\n║│ SMULE IDSMULE\n║│ YTSEARCH JUDUL\n║│ MP3 JUDUL\n║│ AL-QURAN NOMOR 1-114\n║│ AYAT SAJADAH\n║╰❉      DPK BOT      ❇\n╰━━━━━━━━━━━━━━━━\n━━━━┅═❉ই۝ई❉═┅━━━━ ",
+                    "text": "║│ MP4 JUDUL\n║│ MTOH「TGL-BLN-THN」 \n║│ KALENDER\n║│ YOUTUBE JUDUL\n║│ ASMAULHUSNA NO 1-99\n║│ SMULE IDSMULE\n║│ YTSEARCH JUDUL\n║│ MP3 JUDUL\n║│ AL-QURAN NOMOR 1-114\n║│ AYAT SAJADAH",
                     "size": "xs",
                     "margin": "none",
                     "color": "#FFFF00",
@@ -1131,7 +1151,7 @@ def clBot(op):
               {
                 "contents": [
                   {
-                    "text": "╭━━━━━━━━━━━━━━━━\n║╭❉ MENU SELF ❇\n║┝───────────────\n║┝──[❇ SELFBOT ❇ ]\n║│ ME\n║│ MYMID \n║│ MYNAME\n║│ MYBIO\n║│ MYPICTURE\n║│ MYVIDEOPROFILE\n║│ MYCOVER\n║│ STEALMID @\n║│ STEALCONTACT @\n║│ STEALPICTURE @\n║╰❉      DPK BOT      ❇\n╰━━━━━━━━━━━━━━━━\n━━━━┅═❉ই۝ई❉═┅━━━━ ",
+                    "text": "║│ ME\n║│ MYMID \n║│ MYNAME\n║│ MYBIO\n║│ MYPICTURE\n║│ MYVIDEOPROFILE\n║│ MYCOVER\n║│ STEALMID @\n║│ STEALCONTACT @\n║│ STEALPICTURE @",
                     "size": "xs",
                     "margin": "none",
                     "color": "#FFFF00",
@@ -1270,7 +1290,7 @@ def clBot(op):
               {
                 "contents": [
                   {
-                    "text": "╭━━━━━━━━━━━━━━━━\n║╭❉ MENU BOT ❇\n║┝───────────────\n║┝──[❇ SELFBOT ❇ ]\n║│ GETTOKEN\n║│ CHROME 1 \n║│ WIN 1\n║│ IOS 1\n║│ MIMIC ON|OFF\n║│ MIMIC @\n║│ MIMICDEL @\n║│ STEALNAME @\n║│ STEALBIO @\n║│ STEALCOVER @\n║╰❉      DPK BOT      ❇\n╰━━━━━━━━━━━━━━━━\n━━━━┅═❉ই۝ई❉═┅━━━━ ",
+                    "text": "║│ GETTOKEN\n║│ CHROME 1 \n║│ WIN 1\n║│ IOS 1\n║│ MIMIC ON|OFF\n║│ MIMIC @\n║│ MIMICDEL @\n║│ STEALNAME @\n║│ STEALBIO @\n║│ STEALCOVER @ ",
                     "size": "xs",
                     "margin": "none",
                     "color": "#FFFF00",
@@ -1334,6 +1354,19 @@ def clBot(op):
   "type": "carousel"
 }
                            cl.postFlex(to, data)
+
+                elif msg.text.lower().startswith("scall "):
+                                if msg.toType == 2:
+                                    sep = text.split(" ")
+                                    strnum = text.replace(sep[0] + " ","")
+                                    num = int(strnum)
+                                    cl.sendMessage(to, "Succesfully Spam Call to Group")
+                                    for var in range(0,num):
+                                       group = cl.getGroup(to)
+                                       members = [mem.mid for mem in group.members]
+                                       cl.acquireGroupCallRoute(to)
+                                       cl.inviteIntoGroupCall(to, contactIds=members)
+
                 elif msg.text.lower().startswith("smule "):
                             proses = text.split(" ")
                             urutan = text.replace(proses[0] + " ","")
@@ -1414,13 +1447,13 @@ def clBot(op):
                     elapsed_time = time.time() - start
                     sendTextTemplate(to,format(str(elapsed_time)))
                 elif text.lower() == 'restart':
-                    sendTextTemplate(to, "Sudah di restart...")
+                    sendTextTemplate(to, "Akan di restart...")
                     restartBot()
                 elif text.lower() == 'runtime':
                     timeNow = time.time()
                     runtime = timeNow - botStart
                     runtime = format_timespan(runtime)
-                    sendTextTemplate(to, "Bot Aktif Selama {}".format(str(runtime)))
+                    cl.sendMessage(to, "Bot Aktif Selama {}".format(str(runtime)))
                 elif text.lower() == 'about':
                     try:
                         arr = []
@@ -1430,15 +1463,18 @@ def clBot(op):
                         grouplist = cl.getGroupIdsJoined()
                         contactlist = cl.getAllContactIds()
                         blockedlist = cl.getBlockedContactIds()
-                        ret_ = "╔══[ About Self ]"
-                        ret_ += "\n╠ Line : {}".format(contact.displayName)
+                        timeNow = time.time()
+                        runtime = timeNow - botStart
+                        runtime = format_timespan(runtime)
+                        ret_ = "╔ Country : INDONESIA "
+                        ret_ += "\n╠ My Name : {}".format(contact.displayName)
                         ret_ += "\n╠ Group : {}".format(str(len(grouplist)))
                         ret_ += "\n╠ Friend : {}".format(str(len(contactlist)))
                         ret_ += "\n╠ Blocked : {}".format(str(len(blockedlist)))
-                        ret_ += "\n╠══[ About Selfbot ]"
-                        ret_ += "\n╠ Version : Free"
+                        ret_ += "\n╠ Runtime : {}".format(str(runtime))
+                        ret_ += "\n╠ Version : Free v 1.1 by Dpk_bot"
                         ret_ += "\n╠ Creator : {}".format(creator.displayName)
-                        ret_ += "\n╚══[ SELFBOT ]"
+                        ret_ += "\n╚ Git : https://github.com/arifistifik/sbt"
                         sendTextTemplateMaster(to, str(ret_))
                     except Exception as e:
                         cl.sendMessage(msg.to, str(e))
@@ -1522,7 +1558,7 @@ def clBot(op):
                     settings["datectMention"] = False
                     sendTextTemplate(to, "Allstatus bot mode on")
 
-                elif text.lower() == 'me':
+                elif text.lower() == 'mycontact':
                     sendMessageWithMention(to, clMID)
                     cl.sendContact(to, clMID)
                 elif text.lower() == 'mymid':
@@ -1739,7 +1775,7 @@ def clBot(op):
                         for mi_d in settings["mimic"]["target"]:
                             mc += "\n╠ "+cl.getContact(mi_d).displayName
                         sendTextTemplate(msg.to,mc + "\n╚══[ Finish ]")
-                elif ".me" in msg.text.lower():
+                elif text.lower() == 'me':
                        if msg.toType == 2:
                                 contact = cl.getProfile()
                                 mids = [contact.mid]
@@ -1803,7 +1839,7 @@ def clBot(op):
         "contents": [          
           {
             "type": "text",
-            "text": "SELFBOT PRO",
+            "text": "SELFBOT",
             "size": "xl",
             "wrap": True,
             "weight": "bold",
@@ -2041,6 +2077,31 @@ def clBot(op):
                                 cl.sendVideoWithURL(msg.to, me)
                             except Exception as e:
                                 cl.sendMessage(msg.to,str(e))
+                elif "mp4" in msg.text.lower():
+                    if msg.toType == 2:
+                            try:
+                                sep = msg.text.split(" ")
+                                textToSearch = msg.text.replace(sep[0] + " ","")
+                                query = urllib.parse.quote(textToSearch)
+                                search_url="https://www.youtube.com/results?search_query="
+                                mozhdr = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'}
+                                sb_url = search_url + query
+                                sb_get = requests.get(sb_url, headers = mozhdr)
+                                soupeddata = BeautifulSoup(sb_get.content, "html.parser")
+                                yt_links = soupeddata.find_all("a", class_ = "yt-uix-tile-link")
+                                x = (yt_links[1])
+                                yt_href =  x.get("href")
+                                yt_href = yt_href.replace("watch?v=", "")
+                                qx = "https://youtu.be" + str(yt_href)
+                                vid = pafy.new(qx)
+                                stream = vid.streams
+                                best = vid.getbest()
+                                best.resolution, best.extension
+                                for s in stream:
+                                    me = best.url
+                                cl.sendVideoWithURL(msg.to, me)
+                            except Exception as e:
+                                cl.sendMessage(msg.to,str(e))
                 elif "mp3" in msg.text.lower():
                     if msg.toType == 2:
                             try:
@@ -2073,12 +2134,12 @@ def clBot(op):
                             	gid = groups[int(number)-1]                                                            
                             	group = cl.getGroup(gid)                                                            
                             	nama = [contact.mid for contact in group.members]
-                            	k = len(nama)//20
+                            	k = len(nama)//19
                     	        for a in range(k+1):
                             		txt = u''
                     		        s=0
                             		b=[]
-                            		for i in group.members[a*20 : (a+1)*20]:
+                            		for i in group.members[a*19 : (a+1)*19]:
                             			b.append(i.mid)
                             		RmentionMembers(gid, b)                            
                     		        sendTextTemplate(msg.to, "Berhasil Mention Member di Group: \n " + str(group.name))
@@ -2356,7 +2417,7 @@ def clBot(op):
                                                         "action": {
                                                             "type": "uri",
                                                             "label": "Mp3",
-                                                            "uri": "line://app/1602687308-GXq4Vvk9?type=text&text=Ytdl%20{}".format(str(music['id']['videoId']))
+                                                            "uri": "line://app/1602687308-GXq4Vvk9?type=text&text=mp3%20https://www.youtube.com/watch?v={}".format(str(music['id']['videoId']))
                                                         }
                                                     }]
                                                 }, {
@@ -2473,7 +2534,7 @@ def clBot(op):
                             ret_ += "\n╠ {}. {} | {}".format(str(no), str(group.name), str(len(group.members)))
                             no += 1
                         ret_ += "\n╚══[ Total {} Groups ]".format(str(len(groups)))
-                        sendTextTemplate(to, str(ret_))
+                        cl.sendMessage(to, str(ret_))
                 elif text.lower() == 'notif on':
                    if settings["notifikasi"] == True:
                        if settings["lang"] == "JP":
@@ -2621,7 +2682,7 @@ def clBot(op):
                     readTime = hasil + ", " + timeNow.strftime('%d') + " - " + bln + " - " + timeNow.strftime('%Y') + "\nJam : [ " + timeNow.strftime('%H:%M:%S') + " ]"
                     if receiver in read['readPoint']:
                         if read["ROM"][receiver].items() == []:
-                            sendTextTemplate(receiver,"[ Reader ]:\nNone")
+                            cl.sendMessage(receiver,"[ Reader ]:\nNone")
                         else:
                             chiya = []
                             for rom in read["ROM"][receiver].items():
@@ -2642,12 +2703,12 @@ def clBot(op):
                             zxc += pesan2
                         text = xpesan+ zxc + "\n[ Lurking time ]: \n" + readTime
                         try:
-                            sendTextTemplate(receiver, text, contentMetadata={'MENTION':str('{"MENTIONEES":'+json.dumps(zx2).replace(' ','')+'}')}, contentType=0)
+                            cl.sendMessage(receiver, text, contentMetadata={'MENTION':str('{"MENTIONEES":'+json.dumps(zx2).replace(' ','')+'}')}, contentType=0)
                         except Exception as error:
                             print (error)
                         pass
                     else:
-                        sendTextTemplate(receiver,"Lurking has not been set.")
+                        sendTextTemplate(receiver,"ketik[ lurking on ]dulu peak lu")
 
                 elif text.lower() == 'sider on':
                     try:
@@ -2723,7 +2784,7 @@ def clBot(op):
                             cl.updateGroupPicture(to, path)
                             sendTextTemplate(to, "mengubah foto group")
 
-        if op.type == 26:
+        if op.type == 26 or op.type == 25:
             print ("[ 26 ] RECEIVE MESSAGE")
             msg = op.message
             text = msg.text
@@ -2746,16 +2807,63 @@ def clBot(op):
                     text = msg.text
                     if text is not None:
                         cl.sendMessage(msg.to,text)
+                if msg.contentType == 16:
+                    if msg.toType in (2,1,0):
+                        purl = msg.contentMetadata["postEndUrl"].split('userMid=')[1].split('&postId=')
+                        adw = cl.likePost(purl[0], purl[1], random.choice([1001,1002,1003,1004,1005]))
+                        adws = cl.createComment(purl[0], purl[1], settings["commentPost"])
+                        sendTextTemplate(to, "AUTO LIKE SUCCES")
                 if msg.contentType == 0 and sender not in clMID and msg.toType == 2:
                     if 'MENTION' in msg.contentMetadata.keys()!= None:
                         names = re.findall(r'@(\w+)', text)
                         mention = ast.literal_eval(msg.contentMetadata['MENTION'])
                         mentionees = mention['MENTIONEES']
-                        lists = []
+                        group = cl.getGroup(to)
                         for mention in mentionees:
-                            if clMID in mention["M"]:
-                              if settings["detectMention"] == True:
-                                 sendMention(receiver, sender, "", " \nWoy kamu kesepian yak?? ")
+                            if clMid in mention["M"]:
+                            	if settings["detectMention"] == True:
+                                    data = {
+                                                        "type": "flex",
+                                                        "altText": "you kickout from group",
+                                                        "contents": {
+                  "styles": {
+                    "body": {
+                      "backgroundColor": "#0000CD"
+                    }
+                  },
+                  "type": "bubble",
+                  "body": {
+                    "contents": [
+                      {
+                        "contents": [
+                          {
+                            "contents": [
+                              {
+                                "text": settings["autoResponMessage"],
+                                "size": "md",
+                                "margin": "none",
+                                "color": "#FFFF00",
+                                "wrap": True,
+                                "weight": "bold",
+                               "type": "text"
+                              }
+                            ],
+                            "type": "box",
+                            "layout": "baseline"
+                          }
+                        ],
+                        "type": "box",
+                        "layout": "vertical"
+                      }
+                    ],
+                    "type": "box",
+                    "spacing": "md",
+                    "layout": "vertical"
+                  }
+                }
+                }
+                                    cl.postTemplate(to, data)
+                            	break
 
         if op.type == 17:
            print ("MEMBER JOIN TO GROUP")
@@ -2908,8 +3016,6 @@ def clBot(op):
 }
 }
              cl.postTemplate(op.param1, data)
-             #cl.sendImageWithURL(op.param1,image)
-             #cl.sendMessage(op.param1,"Naah nahh.... " + cl.getContact(op.param2).displayName + "\nBaper tingkat tinggi😂")
 
         if op.type == 55:
             print ("[ 55 ] NOTIFIED READ MESSAGE")
@@ -2924,17 +3030,14 @@ def clBot(op):
                             if " " in Name:
                                 nick = Name.split(' ')
                                 if len(nick) == 2:
-                                    sendTextTemplate(op.param1, "╭━━━━┅═❉ই۝ई❉═┅━━━━\n║╭❉ SIDER TERDETEKSI\n║┝───────────────\n" + "║│" + nick[0] + "\n║┝─────────────── " + "\n║│Yuk kak chat sini 🙋\n║╰❉ Jangan ngelamun😁\n╰━━━━━━━━━━━━━━━━\n━━━━┅═❉ই۝ई❉═┅━━━━ ")
+                                    Camera(op.param1, Name)
                                     time.sleep(0.2)
-                                    mentionMembers(op.param1,[op.param2])
                                 else:
-                                    sendTextTemplate(op.param1, "╭━━━━┅═❉ই۝ई❉═┅━━━━\n║╭❉ SIDER TERDETEKSI\n║┝───────────────\n" + "║│" + nick[0] + "\n║┝─────────────── " + "\n║│Yuk kak chat sini 🙋\n║╰❉ Jangan ngelamun😁\n╰━━━━━━━━━━━━━━━━\n━━━━┅═❉ই۝ई❉═┅━━━━ ")
+                                    Camera(op.param1, Name)
                                     time.sleep(0.2)
-                                    mentionMembers(op.param1,[op.param2])
                             else:
-                                sendTextTemplate(op.param1, "╭━━━━┅═❉ই۝ई❉═┅━━━━\n║╭❉ SIDER TERDETEKSI\n║┝───────────────\n" + "║│" + Name + "\n║┝─────────────── " + "\n║│Yuk kak chat sini 🙋\n║╰❉ Jangan ngelamun😁\n╰━━━━━━━━━━━━━━━━\n━━━━┅═❉ই۝ई❉═┅━━━━ ")
+                                Camera(op.param1, Name)
                                 time.sleep(0.2)
-                                mentionMembers(op.param1,[op.param2])
                     else:
                         pass
                 else:
